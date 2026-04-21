@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WatermarkRemover</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script>
+function previewImage(event){
+
+    const reader = new FileReader();
+
+    reader.onload = function(){
+        const preview = document.getElementById("previewImg");
+        preview.src = reader.result;
+        preview.style.display="block";
+    }
+
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="app-container">
+
+<h1>WatermarkRemover</h1>
+<p class="subtitle">AUTOMATED WATERMARK DETECTION AND REMOVAL SYSTEM</p>
+
+<form method="POST" enctype="multipart/form-data">
+
+<label class="upload-box">
+
+<input type="file" name="file" accept="image/*" onchange="previewImage(event)" required>
+
+Click to Upload Image
+
+</label>
+
+<div class="preview">
+<img id="previewImg" style="display:none;">
+</div>
+
+<button type="submit">
+Remove Watermark
+</button>
+
+</form>
+
+{% if result %}
+
+<div class="result-section">
+
+<h3>Cleaned Image</h3>
+
+<img src="{{ result }}">
+
+<br>
+
+<a href="{{ result }}" download class="download-btn">
+Download Result
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
